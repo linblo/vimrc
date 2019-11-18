@@ -286,6 +286,10 @@ inoremap §§ <Esc>
 
 nnoremap silent vv <C-W><C-v>
 
+if filereadable(stdpath("config") . '/startify.vim')
+  execute "source " . stdpath("config") . '/startify.vim'
+endif
+
 let g:lightline = {
       \ 'colorscheme': 'nord',
       \ 'active': {
@@ -339,17 +343,6 @@ function! MyFileformat()
   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
-let g:startify_custom_header = [
-  \ '  $$$$$$$$\  $$$$$$\  $$\   $$\ $$$$$$$\   $$$$$$\',
-  \ '  $$  _____|$$  __$$\ $$$\  $$ |$$  __$$\ $$  __$$\',
-  \ '  $$ |      $$ /  $$ |$$$$\ $$ |$$ |  $$ |$$ /  $$ |',
-  \ '  $$$$$\    $$ |  $$ |$$ $$\$$ |$$ |  $$ |$$ |  $$ |',
-  \ '  $$  __|   $$ |  $$ |$$ \$$$$ |$$ |  $$ |$$ |  $$ |',
-  \ '  $$ |      $$ |  $$ |$$ |\$$$ |$$ |  $$ |$$ |  $$ |',
-  \ '  $$ |       $$$$$$  |$$ | \$$ |$$$$$$$  | $$$$$$  |',
-  \ '  \__|       \______/ \__|  \__|\_______/  \______/'
-  \ ]
-
 let g:promptline_symbols = {
     \ 'left'       : '',
     \ 'right'      : '',
@@ -376,5 +369,4 @@ endif
 
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-          \ | wincmd p | diffthis
 endif
