@@ -27,8 +27,11 @@ Plug 'rakr/vim-two-firewatch'
 Plug 'arcticicestudio/nord-vim'
 Plug 'chriskempson/base16-vim'
 Plug 'mike-hearn/base16-vim-lightline'
+
 " surround
 Plug 'tpope/vim-surround'
+" Quoting
+Plug 'jiangmiao/auto-pairs'
 
 " Prettier
 Plug 'prettier/vim-prettier', {
@@ -82,7 +85,10 @@ Plug 'w0rp/ale'
 Plug 'othree/yajs.vim'
 Plug 'othree/es.next.syntax.vim'
 Plug 'kchmck/vim-coffee-script'
+Plug 'mattn/emmet-vim'
+Plug 'mxw/vim-jsx'
 " Plug 'ruanyl/vim-fixmyjs'
+" Plug 'pangloss/vim-javascript'
 
 " Typescript
 Plug 'HerringtonDarkholme/yats.vim'
@@ -104,6 +110,9 @@ Plug 'scrooloose/nerdtree'
 
 " devicons
 Plug 'ryanoasis/vim-devicons'
+
+" base64
+Plug 'christianrondeau/vim-base64'
 
 " Quake style console
 " if has('nvim')
@@ -175,6 +184,14 @@ let g:nord_bold=1
 let g:nord_underline=1
 colorscheme nord
 
+" Emmet
+let g:user_emmet_leader_key='<Tab>'
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
+
 " FOLDING
 "set foldmethod=syntax
 "set foldlevelstart=1
@@ -191,6 +208,13 @@ autocmd FileType yaml set tabstop=2|set shiftwidth=2|set expandtab|set softtabst
 autocmd FileType javascript set tabstop=2|set shiftwidth=2|set expandtab|set softtabstop=2
 autocmd FileType typescript set tabstop=2|set shiftwidth=2|set expandtab|set softtabstop=2
 
+au FileType javascript setlocal formatprg=prettier
+au FileType javascript.jsx setlocal formatprg=prettier
+au FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+au FileType html setlocal formatprg=js-beautify\ --type\ html
+au FileType scss setlocal formatprg=prettier\ --parser\ css
+au FileType css setlocal formatprg=prettier\ --parser\ css
+
 " ripgrep setup
 if executable('rg')
   set grepprg=rg\ --vimgrep
@@ -206,9 +230,22 @@ let g:indent_guides_guide_size = 1
 " Ale config
 let g:ale_sign_error = '☛'
 let g:ale_sign_warning = '☛'
+
+let g:ale_linters = {
+  \   'python': ['flake8', 'pylint'],
+  \   'javascript': ['eslint'],
+  \   'vue': ['eslint']
+\}
 let g:ale_fixers = {
-  \ 'javascript': ['prettier', 'eslint']
-  \ }
+  \    'javascript': ['prettier', 'eslint'],
+  \    'typescript': ['prettier', 'tslint'],
+  \    'vue': ['eslint'],
+  \    'scss': ['prettier'],
+  \    'html': ['prettier'],
+  \    'reason': ['refmt']
+\}
+
+let g:ale_fix_on_save = 0
 let g:lightline#ale#indicator_warnings = ''
 let g:lightline#ale#indicator_errors = ''
 let g:lightline#ale#indicator_ok = ''
