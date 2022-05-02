@@ -1,9 +1,9 @@
 local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true }
-  if opts then
-    options = vim.tbl_extend("force", options, opts)
-  end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    local options = { noremap = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 -- Nvim Tree
@@ -24,6 +24,15 @@ map("n", "<leader>cp", ":Lspsaga diagnostic_jump_prev<CR>", { silent = true })
 map("n", "<leader>cr", ":Lspsaga rename<CR>", { silent = true })
 map("n", "<leader>cd", ":Lspsaga preview_definition<CR>", { silent = true })
 map("n", "<leader>=", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", { silent = false })
+
+map("n", "<leader>ko", '<cmd>lua require("git-conflict").ours<CR>', { silent = true })
+
+-- vim.keymap.set('n', 'co', '<Plug>(git-conflict-ours)')
+-- vim.keymap.set('n', 'cb', '<Plug>(git-conflict-both)')
+-- vim.keymap.set('n', 'c0', '<Plug>(git-conflict-none)')
+-- vim.keymap.set('n', 'ct', '<Plug>(git-conflict-theirs)')
+-- vim.keymap.set('n', '[x', '<Plug>(git-conflict-next-conflict)')
+-- vim.keymap.set('n', ']x', '<Plug>(git-conflict-prev-conflict)')
 
 local opts = { noremap = true, silent = true }
 
@@ -71,25 +80,28 @@ map("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<CR>", opts)
 map("n", "<leader>lR", "<cmd>Telescope lsp_references<CR>", opts)
 map("n", "<leader>lD", "<cmd>Telescope diagnostics<CR>", opts)
 map(
-  "n",
-  "<Leader>f",
-  '<cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({}))<cr>'
+    "n",
+    "<Leader>f",
+    '<cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({}))<cr>'
 )
 map("n", "<leader>r", '<cmd>lua require("telescope.builtin").registers()<cr>')
 map(
-  "n",
-  "<leader>/",
-  '<cmd>lua require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown({}))<cr>'
+    "n",
+    "<leader>/",
+    '<cmd>lua require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown({}))<cr>'
 )
 map("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({}))<cr>')
 map("n", "<leader>h", '<cmd>lua require("telescope.builtin").help_tags()<cr>')
 map(
-  "n",
-  "<leader>th",
-  '<cmd>lua require("telescope.builtin").file_browser(require("telescope.themes").get_dropdown({}))<cr>'
+    "n",
+    "<leader>th",
+    '<cmd>lua require("telescope.builtin").file_browser(require("telescope.themes").get_dropdown({}))<cr>'
 )
 map("n", "<leader>spl", '<cmd>lua require("telescope.builtin").spell_suggest()<cr>')
 map("n", "<leader>gpr", '<cmd>lua require("telescope").extensions.gh.pull_request()<cr>')
+
+-- Symbols
+map("n", "<Leader>y", ":SymbolsOutline<CR>")
 
 -- Open nvimrc file
 map("n", "<Leader>v", "<cmd>e $MYVIMRC<CR>")
@@ -131,10 +143,10 @@ map("n", "J", "mzJ`z")
 map("n", "Y", "y$")
 
 -- Line bubbling
-map("n", "<c-j>", "<cmd>m .+1<CR>==", { silent = true })
-map("n", "<c-k>", "<cmd>m .-2<CR>==", { silent = true })
-map("v", "<c-j>", ":m '>+1<CR>==gv=gv", { silent = true })
-map("v", "<c-k>", ":m '<-2<CR>==gv=gv", { silent = true })
+-- map("n", "<c-j>", "<cmd>m .+1<CR>==", { silent = true })
+-- map("n", "<c-k>", "<cmd>m .-2<CR>==", { silent = true })
+-- map("v", "<c-j>", ":m '>+1<CR>==gv=gv", { silent = true })
+-- map("v", "<c-k>", ":m '<-2<CR>==gv=gv", { silent = true })
 
 --Auto close tags
 -- map("i", ",/", "</<C-X><C-O>")
@@ -175,40 +187,40 @@ vim.api.nvim_set_keymap("n", "<leader>nc", ":lua require('package-info').hide()<
 
 -- Update package on line
 vim.api.nvim_set_keymap(
-  "n",
-  "<leader>nu",
-  ":lua require('package-info').update()<CR>",
-  { silent = true, noremap = true }
+    "n",
+    "<leader>nu",
+    ":lua require('package-info').update()<CR>",
+    { silent = true, noremap = true }
 )
 
 -- Delete package on line
 vim.api.nvim_set_keymap(
-  "n",
-  "<leader>nd",
-  ":lua require('package-info').delete()<CR>",
-  { silent = true, noremap = true }
+    "n",
+    "<leader>nd",
+    ":lua require('package-info').delete()<CR>",
+    { silent = true, noremap = true }
 )
 
 -- Install a new package
 vim.api.nvim_set_keymap(
-  "n",
-  "<leader>ni",
-  ":lua require('package-info').install()<CR>",
-  { silent = true, noremap = true }
+    "n",
+    "<leader>ni",
+    ":lua require('package-info').install()<CR>",
+    { silent = true, noremap = true }
 )
 
 -- Reinstall dependencies
 vim.api.nvim_set_keymap(
-  "n",
-  "<leader>nr",
-  ":lua require('package-info').reinstall()<CR>",
-  { silent = true, noremap = true }
+    "n",
+    "<leader>nr",
+    ":lua require('package-info').reinstall()<CR>",
+    { silent = true, noremap = true }
 )
 
 -- Install a different package version
 vim.api.nvim_set_keymap(
-  "n",
-  "<leader>np",
-  ":lua require('package-info').change_version()<CR>",
-  { silent = true, noremap = true }
+    "n",
+    "<leader>np",
+    ":lua require('package-info').change_version()<CR>",
+    { silent = true, noremap = true }
 )
