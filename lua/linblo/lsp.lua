@@ -32,7 +32,6 @@ vim.diagnostic.open_float(nil, {
 
 lsp_installer.on_server_ready(function(server)
     local opts = {}
-
     -- (optional) Customize the options passed to the server
     if server.name == "denols" then
         opts.filetypes = { "javascript", "typescript" }
@@ -63,6 +62,33 @@ end)
 local lspkind = require("lspkind")
 local cmp = require("cmp")
 
+local icons = {
+    Text = "",
+    Method = "",
+    Function = "",
+    Constructor = "⌘",
+    Field = "ﰠ",
+    Variable = "",
+    Class = "ﴯ",
+    Interface = "",
+    Module = "",
+    Property = "ﰠ",
+    Unit = "塞",
+    Value = "",
+    Enum = "",
+    Keyword = "廓",
+    Snippet = "",
+    Color = "",
+    File = "",
+    Reference = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = "פּ",
+    Event = "",
+    Operator = "",
+    TypeParameter = "",
+}
 cmp.setup({
     snippet = {
         expand = function(args)
@@ -81,23 +107,21 @@ cmp.setup({
         completeopt = "menu,menuone,noinsert",
     },
     sources = {
-        { name = "emoji" },
         { name = "nvim_lsp" },
+        { name = "nvim_lsp_signature_help" },
         { name = "vsnip" },
-        { name = "buffer" },
+        { name = "cmp_tabnine" },
         { name = "path" },
+        { name = "emoji" },
+        { name = "buffer" },
     },
     formatting = {
-        format = lspkind.cmp_format({
-            with_text = true,
-            maxwidth = 50,
-            menu = {
-                buffer = "",
-                nvim_lsp = "",
-                spell = "",
-                look = "",
-            },
-        }),
+        format = function(_, vim_item)
+            vim_item.menu = vim_item.kind
+            vim_item.kind = icons[vim_item.kind]
+
+            return vim_item
+        end,
     },
     view = {
         entries = "native",
@@ -106,6 +130,13 @@ cmp.setup({
         ghost_text = true,
     },
 })
+
+local signs = { Error = "●", Warn = "●", Hint = "●", Info = "●" }
+
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))

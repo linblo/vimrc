@@ -21,7 +21,11 @@ require("lualine").setup({
             { "diff", color_added = "#a7c080", color_modified = "#ffdf1b", color_removed = "#ff6666" },
         },
         lualine_c = {
-            { "diagnostics", sources = { "nvim_diagnostic" } },
+            {
+                "diagnostics",
+                sources = { "nvim_diagnostic" },
+                symbols = { error = "●", warn = "●", info = "●", hint = "●" },
+            },
             require("auto-session-library").current_session_name,
             function()
                 return "%="

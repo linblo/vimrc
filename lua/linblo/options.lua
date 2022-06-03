@@ -42,5 +42,3 @@ opt.guicursor = "n-v-c-sm:block-blinkwait50-blinkon50-blinkoff50,i-ci-ve:ver25-C
 -- vim.g.netrw_liststyle = 3 -- Tree style netrw_liststyle
 opt.undodir = vim.fn.stdpath("config") .. "/undo"
 opt.undofile = true
-opt.splitright = true
-opt.splitbelow = true

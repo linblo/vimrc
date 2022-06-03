@@ -6,13 +6,26 @@ require("telescope").load_extension("gh")
 require("telescope").setup({
     defaults = {
         file_sorter = require("telescope.sorters").get_fzy_sorter,
-        prompt_prefix = " > ",
+        prompt_prefix = "   ",
+        -- prompt_prefix = " > ",
         color_devicons = true,
         file_ignore_patterns = { "node_modules", ".git", "vendor" },
-        winblend = 10,
+        winblend = 5,
+        layout_config = {
+            horizontal = {
+                prompt_position = "top",
+                preview_width = 0.55,
+                results_width = 0.8,
+            },
+            vertical = {
+                mirror = false,
+            },
+            width = 0.80,
+            height = 0.85,
+            preview_cutoff = 120,
+        },
         sorting_strategy = "descending",
         layout_strategy = "horizontal",
-
         file_previewer = require("telescope.previewers").vim_buffer_cat.new,
         grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
         qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,

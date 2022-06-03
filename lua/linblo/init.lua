@@ -7,8 +7,6 @@ local g = vim.g -- a table to access global variables
 -- Map leader to space
 g.mapleader = " "
 
--- Bootstrap Paq when needed
-local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/paqs/start/paq-nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
     fn.system({ "git", "clone", "--depth=1", "https://github.com/savq/paq-nvim.git", install_path })
@@ -16,6 +14,7 @@ end
 
 -- Plugins
 require("paq")({
+    "lewis6991/impatient.nvim",
     "nathom/filetype.nvim",
     "nvim-treesitter/nvim-treesitter",
     "nvim-lua/plenary.nvim",
@@ -30,8 +29,10 @@ require("paq")({
     "hrsh7th/vim-vsnip",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
+    { "tzachar/cmp-tabnine", run = "./install.sh" },
     "jose-elias-alvarez/null-ls.nvim",
-    "kyazdani42/nvim-tree.lua",
+    "nvim-neo-tree/neo-tree.nvim",
+    -- "kyazdani42/nvim-tree.lua",
     "kyazdani42/nvim-web-devicons",
     "lewis6991/gitsigns.nvim",
     "neovim/nvim-lspconfig",
@@ -42,6 +43,7 @@ require("paq")({
     "nvim-telescope/telescope-fzy-native.nvim",
     "nvim-telescope/telescope.nvim",
     "nvim-telescope/telescope-github.nvim",
+    "nvim-telescope/telescope-symbols.nvim",
     "octaltree/cmp-look",
     "onsails/lspkind-nvim",
     "p00f/nvim-ts-rainbow",
@@ -65,29 +67,39 @@ require("paq")({
     -- "ggandor/lightspeed.nvim",
     "lukas-reineke/indent-blankline.nvim",
     "folke/which-key.nvim",
-    -- "karb94/neoscroll.nvim",
+    "karb94/neoscroll.nvim",
     "FotiadisM/tabset.nvim",
     "simrat39/symbols-outline.nvim",
     "rmagatti/auto-session",
     "marko-cerovac/material.nvim",
     "folke/tokyonight.nvim",
-    "declancm/cinnamon.nvim",
+    -- "declancm/cinnamon.nvim",
     "akinsho/git-conflict.nvim",
+    -- "nvim-orgmode/orgmode",
+    "folke/trouble.nvim",
+    "akinsho/toggleterm.nvim",
 })
-require("material").setup({
-    lualine_style = "stealth",
-})
-g.material_style = "deep ocean"
+require("impatient")
 
-g.tokyonight_style = "night"
+-- g.nvim_tree_respect_buf_cwd = 1
+-- g.nvim_tree_highlight_opened_files = 1
+-- require("nvim-tree").setup({})
 
-g.nvim_tree_respect_buf_cwd = 1
-g.nvim_tree_highlight_opened_files = 1
-require("nvim-tree").setup({})
-
+require("neo-tree").setup()
 require("git-conflict").setup({
     default_mappings = false,
 })
+
+require("trouble").setup()
+require("toggleterm").setup()
+
+-- lazygit
+local Terminal = require("toggleterm.terminal").Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", direction = "float", hidden = true })
+
+function _lazygit_toggle()
+    lazygit:toggle()
+end
 
 require("Comment").setup()
 require("indent_blankline").setup({
@@ -117,6 +129,7 @@ require("nvim-treesitter.configs").setup({
         "cpp",
         "go",
         "rust",
+        "lua",
     },
     highlight = {
         enable = true,
@@ -143,7 +156,7 @@ require("gitsigns").setup({
 })
 
 -- Session
-local sessionopts = {
+require("auto-session").setup({
     log_level = "info",
     auto_session_enable_last_session = false,
     auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
@@ -151,17 +164,13 @@ local sessionopts = {
     auto_save_enabled = true,
     auto_restore_enabled = false,
     auto_session_suppress_dirs = nil,
-}
-require("auto-session").setup(sessionopts)
+})
 
 -- Setup treesitter
 local ts = require("nvim-treesitter.configs")
 ts.setup({ highlight = { enable = true } })
 
-cmd([[colorscheme 84]]) -- Put your favorite colorscheme here
-
 require("linblo.options")
--- This little monkey has to go after termguicolors is set or gets upset
 require("colorizer").setup()
 
 -- Use spelling for markdown files ‘]s’ to find next, ‘[s’ for previous, 'z=‘ for suggestions when on one.
@@ -199,6 +208,10 @@ require("tabset").setup({
         expandtab = true,
     },
     languages = {
+        rust = {
+            tabwidth = 8,
+            expandtab = false,
+        },
         go = {
             tabwidth = 8,
             expandtab = false,
@@ -218,21 +231,46 @@ require("nvim-autopairs").setup({})
 require("package-info").setup({
     package_manager = "npm",
 })
-require("which-key").setup()
+require("which-key").setup({
+    window = {
+        border = "none", -- none, single, double, shadow
+        position = "bottom", -- bottom, top
+        margin = { 1, 1, 1, 1 }, -- extra window margin [top, right, bottom, left]
+        padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
+        winblend = 5,
+    },
+})
 
 require("octo").setup()
 --
 -- require('neoscroll').setup()
-require("cinnamon").setup({
-    default_keymaps = true, -- Create default keymaps.
-    extra_keymaps = true, -- Create extra keymaps.
-    extended_keymaps = true, -- Create extended keymaps.
-    centered = true, -- Keep cursor centered in window when using window scrolling.
-    default_delay = 3, -- The default delay (in ms) between each line when scrolling.
-    horizontal_scroll = true, -- Enable smooth horizontal scrolling when view shifts left or right.
-    scroll_limit = 150, -- Max number of lines moved before scrolling is skipped.
-})
+-- require("cinnamon").setup({
+--     default_keymaps = true, -- Create default keymaps.
+--     extra_keymaps = true, -- Create extra keymaps.
+--     extended_keymaps = true, -- Create extended keymaps.
+--     centered = true, -- Keep cursor centered in window when using window scrolling.
+--     default_delay = 3, -- The default delay (in ms) between each line when scrolling.
+--     horizontal_scroll = true, -- Enable smooth horizontal scrolling when view shifts left or right.
+--     scroll_limit = 150, -- Max number of lines moved before scrolling is skipped.
+-- })
 
 require("surround").setup({ mappings_style = "sandwich" })
 
+-- require("orgmode").setup_ts_grammar()
+-- require("nvim-treesitter.configs").setup({
+--     highlight = {
+--         enable = true,
+--         disable = { "org" }, -- Remove this to use TS highlighter for some of the highlights (Experimental)
+--         additional_vim_regex_highlighting = { "org" }, -- Required since TS highlighter doesn't support all syntax features (conceal)
+--     },
+--     ensure_installed = { "org" }, -- Or run :TSUpdate org
+-- })
+--
+-- require("orgmode").setup({
+--     org_agenda_files = { "~/orgs/**/*" },
+--     org_default_notes_file = "~/org/refile.org",
+-- })
+--
 require("linblo.mappings")
+
+require("linblo.theme")
