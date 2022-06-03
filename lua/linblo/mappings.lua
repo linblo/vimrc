@@ -41,14 +41,30 @@ map(
     "<cmd>lua vim.lsp.buf.implementation()<CR>",
     { noremap = true, silent = true, desc = "Goto implementation" }
 )
+map(
+    "n",
+    "gT",
+    "<cmd>lua vim.lsp.buf.type_definition()<CR>",
+    { noremap = true, silent = true, desc = "Goto type definition" }
+)
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true, desc = "References" })
-map("n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-map("n", "gj", "<cmd>lua vim.diagnostic.goto_next({ border = 'rounded' })<cr>", opts)
-map("n", "gk", "<cmd>lua vim.diagnostic.goto_prev({ border = 'rounded' })<cr>", opts)
-map("n", "gK", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+map("n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true, desc = "Float" })
+map(
+    "n",
+    "gj",
+    "<cmd>lua vim.diagnostic.goto_next({ border = 'rounded' })<cr>",
+    { noremap = true, silent = true, desc = "Next (diag)" }
+)
+map(
+    "n",
+    "gk",
+    "<cmd>lua vim.diagnostic.goto_prev({ border = 'rounded' })<cr>",
+    { noremap = true, silent = true, desc = "Previous (diag)" }
+)
+map("n", "gK", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true, desc = "Hover" })
+map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true, desc = "Rename" })
 map("n", "<leader>li", "<cmd>LspInfo<cr>", { noremap = true, silent = true, desc = "LSP info" })
 map("n", "<leader>lI", "<cmd>LspInstallInfo<cr>", { noremap = true, silent = true, desc = "LSP Install info" })
-map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true, desc = "Rename" })
 
 -- GitConflict
 map("n", "<leader>ko", ":GitConflictChooseOurs<CR>", { silent = true })
@@ -142,7 +158,7 @@ vim.api.nvim_set_keymap(
 )
 vim.api.nvim_set_keymap(
     "n",
-    "gR",
+    "<leader>xr",
     "<cmd>Trouble lsp_references<cr>",
     { desc = "Trouble references", silent = true, noremap = true }
 )
@@ -177,6 +193,7 @@ map("n", "<leader>lR", "<cmd>Telescope lsp_references<CR>", { noremap = true, si
 map("n", "<leader>le", "<cmd>Telescope symbols<CR>", { noremap = true, silent = true, desc = "Emoji symbols" })
 map("n", "<leader>jl", "<cmd>Telescope jumplist<CR>", { noremap = true, silent = true, desc = "Jumplist" })
 map("n", "<leader>sh", "<cmd>Telescope search_history<CR>", { noremap = true, silent = true, desc = "Search history" })
+map("n", "<leader>C", "<cmd>Telescope colorscheme<CR>", { noremap = true, silent = true, desc = "Colorschemes" })
 
 map("n", "<leader>lD", function()
     require("telescope.builtin").diagnostics()
