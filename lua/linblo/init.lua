@@ -30,6 +30,7 @@ require("paq")({
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
     { "tzachar/cmp-tabnine", run = "./install.sh" },
+    "octaltree/cmp-look",
     "jose-elias-alvarez/null-ls.nvim",
     "nvim-neo-tree/neo-tree.nvim",
     -- "kyazdani42/nvim-tree.lua",
@@ -44,7 +45,6 @@ require("paq")({
     "nvim-telescope/telescope.nvim",
     "nvim-telescope/telescope-github.nvim",
     "nvim-telescope/telescope-symbols.nvim",
-    "octaltree/cmp-look",
     "onsails/lspkind-nvim",
     "p00f/nvim-ts-rainbow",
     "phaazon/hop.nvim",
@@ -62,22 +62,26 @@ require("paq")({
     "MunifTanjim/nui.nvim",
     "vuki656/package-info.nvim",
     "pwntester/octo.nvim",
+    "L3MON4D3/LuaSnip",
+    "rafamadriz/friendly-snippets",
     -- "glepnir/galaxyline.nvim",
     "SmiteshP/nvim-gps",
     -- "ggandor/lightspeed.nvim",
     "lukas-reineke/indent-blankline.nvim",
     "folke/which-key.nvim",
-    "karb94/neoscroll.nvim",
+    -- "karb94/neoscroll.nvim",
     "FotiadisM/tabset.nvim",
     "simrat39/symbols-outline.nvim",
     "rmagatti/auto-session",
-    "marko-cerovac/material.nvim",
-    "folke/tokyonight.nvim",
-    -- "declancm/cinnamon.nvim",
+    "declancm/cinnamon.nvim",
     "akinsho/git-conflict.nvim",
     -- "nvim-orgmode/orgmode",
     "folke/trouble.nvim",
     "akinsho/toggleterm.nvim",
+    "sindrets/diffview.nvim",
+    "Mofiqul/dracula.nvim",
+    "folke/tokyonight.nvim",
+    "marko-cerovac/material.nvim",
 })
 require("impatient")
 
@@ -244,15 +248,15 @@ require("which-key").setup({
 require("octo").setup()
 --
 -- require('neoscroll').setup()
--- require("cinnamon").setup({
---     default_keymaps = true, -- Create default keymaps.
---     extra_keymaps = true, -- Create extra keymaps.
---     extended_keymaps = true, -- Create extended keymaps.
---     centered = true, -- Keep cursor centered in window when using window scrolling.
---     default_delay = 3, -- The default delay (in ms) between each line when scrolling.
---     horizontal_scroll = true, -- Enable smooth horizontal scrolling when view shifts left or right.
---     scroll_limit = 150, -- Max number of lines moved before scrolling is skipped.
--- })
+require("cinnamon").setup({
+    default_keymaps = true, -- Create default keymaps.
+    extra_keymaps = true, -- Create extra keymaps.
+    extended_keymaps = true, -- Create extended keymaps.
+    centered = true, -- Keep cursor centered in window when using window scrolling.
+    default_delay = 0.2, -- The default delay (in ms) between each line when scrolling.
+    horizontal_scroll = true, -- Enable smooth horizontal scrolling when view shifts left or right.
+    scroll_limit = 150, -- Max number of lines moved before scrolling is skipped.
+})
 
 require("surround").setup({ mappings_style = "sandwich" })
 
