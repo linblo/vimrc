@@ -47,10 +47,11 @@ exe 'hi CursorLineNr guifg='s:fg ' guibg='s:bg2
 exe 'hi CursorColumn  guibg='s:bg3
 exe 'hi ColorColumn  guibg='s:bg2
 exe 'hi LineNr guifg='s:fg2' guibg='s:bg2
-exe 'hi VertSplit guifg='s:fg3' guibg='s:bg3
-exe 'hi MatchParen guifg=white guibg='s:cur ' gui=underline'
+exe 'hi VertSplit guibg='s:fg4' guifg='s:bg
+exe 'hi FloatBorder guifg='s:fg4' guibg='s:bg2
+exe 'hi MatchParen guifg=white guibg='s:fg3' guifg='s:bg
 exe 'hi StatusLine guifg='s:fg2 ' guibg='s:bg2' gui=bold'
-exe 'hi Pmenu guifg='s:bg ' guibg='s:comment
+exe 'hi Pmenu guifg='s:fg4 ' guibg='s:bg2
 exe 'hi PmenuSel  guibg='s:bg2
 exe 'hi IncSearch guifg='s:bg ' guibg='s:cur
 exe 'hi Search guibg='s:comment 'guifg='s:fg ' gui=underline'
@@ -62,7 +63,7 @@ exe 'hi SignColumn guibg='s:bg2' guifg='s:fg2
 exe 'hi Boolean guifg='s:const
 exe 'hi Delimiter guifg='s:fg4
 exe 'hi Character guifg='s:const
-exe 'hi Comment guifg='s:comment
+exe 'hi Comment guifg='s:comment ' gui=italic'
 exe 'hi Conditional guifg='s:keyword
 exe 'hi Constant guifg='s:const
 exe 'hi Todo guibg='s:bg
@@ -75,7 +76,7 @@ exe 'hi ErrorMsg guifg='s:warning ' guibg='s:bg2' gui=bold'
 exe 'hi WarningMsg guifg='s:fg ' guibg='s:warning2
 exe 'hi Float guifg='s:const
 exe 'hi Function guifg='s:func 'gui=bold'
-exe 'hi Identifier guifg='s:type ' gui=italic'
+exe 'hi Identifier guifg='s:type
 exe 'hi Keyword guifg='s:keyword 'gui=bold'
 exe 'hi Label guifg='s:var
 exe 'hi NonText guifg='s:bg4 ' guibg='s:bg2
@@ -85,7 +86,7 @@ exe 'hi PreProc guifg='s:keyword
 exe 'hi Special guifg='s:fg4
 exe 'hi SpecialKey guifg='s:fg2' guibg='s:bg2
 exe 'hi Statement guifg='s:keyword
-exe 'hi StorageClass guifg='s:keyword '  gui=italic'
+exe 'hi StorageClass guifg='s:keyword
 exe 'hi String guifg='s:str
 exe 'hi Tag guifg='s:keyword
 exe 'hi Title guifg='s:fg ' gui=bold'
@@ -93,6 +94,16 @@ exe 'hi Todo guifg='s:fg2 ' gui=inverse,bold'
 exe 'hi Type guifg='s:type
 exe 'hi Underlinedo gui=underline'
 exe 'hi Noise guifg='s:fg4
+
+exe 'hi SpellBad gui=undercurl'
+exe 'hi SpellCap gui=undercurl'
+exe 'hi SpellLocal gui=undercurl'
+exe 'hi SpellRare gui=undercurl'
+
+exe 'hi DiagnosticUnderlineError gui=undercurl'
+exe 'hi DiagnosticUnderlineWarn gui=undercurl'
+exe 'hi DiagnosticUnderlineInfo gui=undercurl'
+exe 'hi DiagnosticUnderlineHint gui=undercurl'
 
 " GitGutter
 exe 'hi GitGutterAdd guifg='s:untracked ' ctermfg=2'
@@ -203,4 +214,5 @@ let s:p.tabline.right = [ [ s:base2, s:base00 ] ]
 let s:p.normal.error = [ [ s:base03, s:warning ] ]
 let s:p.normal.warning = [ [ s:base023, s:warning2 ] ]
 
-" let g:lightline#colorscheme#84#palette = lightline#colorscheme#fill(s:p)
+exe 'hi DashboardFooter gui=italic'
+
