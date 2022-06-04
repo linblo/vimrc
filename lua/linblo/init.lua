@@ -82,6 +82,10 @@ require("paq")({
     "Mofiqul/dracula.nvim",
     "folke/tokyonight.nvim",
     "marko-cerovac/material.nvim",
+    "navarasu/onedark.nvim",
+    "VDuchauffour/neodark.nvim",
+    "projekt0n/github-nvim-theme",
+    "catppuccin/nvim",
 })
 require("impatient")
 
