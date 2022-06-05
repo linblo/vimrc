@@ -1,8 +1,9 @@
-local lsp_installer = require("nvim-lsp-installer")
---
+require("nvim-lsp-installer").setup()
+local lspconfig = require("lspconfig")
+
 -- LSP this is needed for LSP completions in CSS along with the snippets plugin
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- capabilities.textDocument.completion.completionItem.resolveSupport = {
 --   properties = {
 --     "documentation",
@@ -13,7 +14,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- LSP Prevents inline buffer annotations
 vim.diagnostic.open_float(nil, {
-    source = "always",
+	source = "always",
 })
 
 -- LSP Saga config & keys https://github.com/glepnir/lspsaga.nvim
@@ -30,139 +31,73 @@ vim.diagnostic.open_float(nil, {
 --   warn_sign = "",
 -- })
 
-lsp_installer.on_server_ready(function(server)
-    local opts = {}
-    -- (optional) Customize the options passed to the server
-    if server.name == "denols" then
-        opts.filetypes = { "javascript", "typescript" }
-        opts.init_options = { enable = true, lint = true, unstable = true }
-    end
-
-    if server.name == "eslint" then
-        -- opts.on_attach = function(client, bufnr)
-        -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
-        -- the resolved capabilities of the eslint server ourselves!
-        opts.filetypes = { "javascript", "typescript" }
-        -- client.resolved_capabilities.document_formatting = false
-        -- common_on_attach(client, bufnr)
-        -- end
-        opts.settings = {
-            format = { enable = false }, -- this will enable formatting
-        }
-    end
-    if server.name == "rome" then
-        opts.filetypes = { "javascript", "typescript" }
-    end
-
-    -- This setup() function is exactly the same as lspconfig's setup function.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/ADVANCED_README.md
-    server:setup(opts)
-end)
-
-local lspkind = require("lspkind")
-local cmp = require("cmp")
-
-local icons = {
-    Text = "",
-    Method = "",
-    Function = "",
-    Constructor = "⌘",
-    Field = "ﰠ",
-    Variable = "",
-    Class = "ﴯ",
-    Interface = "",
-    Module = "",
-    Property = "ﰠ",
-    Unit = "塞",
-    Value = "",
-    Enum = "",
-    Keyword = "廓",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "",
-    EnumMember = "",
-    Constant = "",
-    Struct = "פּ",
-    Event = "",
-    Operator = "",
-    TypeParameter = "",
-}
-cmp.setup({
-    snippet = {
-        expand = function(args)
-            -- For `vsnip` user.
-            vim.fn["vsnip#anonymous"](args.body)
-        end,
-    },
-    mapping = {
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({ select = false }),
-    },
-    completion = {
-        completeopt = "menu,menuone,noinsert",
-    },
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
-        { name = "vsnip" },
-        { name = "cmp_tabnine" },
-        { name = "path" },
-        { name = "emoji" },
-        { name = "buffer" },
-    },
-    formatting = {
-        format = function(_, vim_item)
-            vim_item.menu = vim_item.kind
-            vim_item.kind = icons[vim_item.kind]
-
-            return vim_item
-        end,
-    },
-    view = {
-        entries = "native",
-    },
-    experimental = {
-        ghost_text = true,
-    },
-})
-
-local signs = { Error = "●", Warn = "●", Hint = "●", Info = "●" }
-
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+local on_attach = function(client, bufnr)
+	require("aerial").on_attach(client, bufnr)
 end
 
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+-- lspconfig.denols.setup({
+--   filetypes = { "javascript", "typescript" },
+--   init_options = { enable = true, lint = true, unstable = true },
+--   on_attach,
+-- })
+
+lspconfig.eslint.setup({
+	-- client.resolved_capabilities.document_formatting = false
+	-- common_on_attach(client, bufnr)
+	-- end
+	filetypes = { "javascript", "typescript" },
+	settings = {
+		format = { enable = false }, -- this will enable formatting
+	},
+	on_attach,
+})
+lspconfig.tsserver.setup({
+	-- client.resolved_capabilities.document_formatting = false
+	-- common_on_attach(client, bufnr)
+	-- end
+	filetypes = { "javascript", "typescript" },
+	on_attach,
+})
+lspconfig.rome.setup({
+	filetypes = { "javascript", "typescript" },
+	on_attach,
+})
+lspconfig.rust_analyzer.setup({
+	on_attach,
+})
+lspconfig.sumneko_lua.setup({
+	on_attach,
+})
+lspconfig.gopls.setup({
+	on_attach,
+})
+
+local lspkind = require("lspkind")
 
 -- Setup lspconfig.
 require("null-ls").setup({
-    sources = {
-        require("null-ls").builtins.formatting.prettier.with({
-            filetypes = {
-                "javascript",
-                "typescript",
-                "css",
-                "scss",
-                "html",
-                "json",
-                "yaml",
-                "markdown",
-                "graphql",
-                "md",
-                "txt",
-            },
-        }),
-        require("null-ls").builtins.formatting.stylua.with({
-            args = { "--indent-width", "2", "--indent-type", "Spaces", "-" },
-        }),
-    },
+	sources = {
+		require("null-ls").builtins.formatting.prettier.with({
+			filetypes = {
+				"javascript",
+				"typescript",
+				"css",
+				"scss",
+				"html",
+				"json",
+				"yaml",
+				"markdown",
+				"graphql",
+				"md",
+				"txt",
+			},
+		}),
+		require("null-ls").builtins.formatting.stylua,
+		-- .with({
+		--   args = { "--indent-width", "2", "--indent-type", "Spaces", "-" },
+		-- }),
+	},
+	on_attach,
 })
 
 -- the duration in there is to stop timeouts on massive files

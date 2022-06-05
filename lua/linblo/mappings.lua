@@ -11,8 +11,8 @@ local map = vim.keymap.set
 -- map("n", "<c-t>", ":NvimTreeToggle<CR>", { desc = "Tree", silent = true })
 
 --Themes NeoTree
-map("n", "<c-t>", ":Neotree<CR>", { desc = "Tree", silent = true })
-
+map("n", "<c-t>", ":NeoTreeFocusToggle<CR>", { desc = "Tree", silent = true })
+map("n", "<leader>tt", ":NeoTreeFloatToggle<CR>", { desc = "Tree floating", silent = true })
 -- LSP Saga
 map("n", "<Leader>cf", ":Lspsaga lsp_finder<CR>", { desc = "Code finder", silent = true })
 map("n", "<leader>ca", ":Lspsaga code_action<CR>", { desc = "Code action", silent = true })
@@ -27,7 +27,7 @@ map("n", "<leader>cn", ":Lspsaga diagnostic_jump_next<CR>", { desc = "Next (diag
 map("n", "<leader>cp", ":Lspsaga diagnostic_jump_prev<CR>", { desc = "Previous (diag)", silent = true })
 map("n", "<leader>cr", ":Lspsaga rename<CR>", { desc = "Rename", silent = true })
 map("n", "<leader>cd", ":Lspsaga preview_definition<CR>", { desc = "Definition preview", silent = true })
-map("n", "<leader>=", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", { desc = "Format", silent = false })
+map("n", "<leader>=", "<cmd>lua vim.lsp.buf.formatting_seq_sync()<CR>", { desc = "Format", silent = false })
 
 local opts = { noremap = true, silent = true }
 
@@ -36,30 +36,30 @@ map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silen
 map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true, desc = "Action" })
 map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true, desc = "Goto definition" })
 map(
-    "n",
-    "gI",
-    "<cmd>lua vim.lsp.buf.implementation()<CR>",
-    { noremap = true, silent = true, desc = "Goto implementation" }
+	"n",
+	"gI",
+	"<cmd>lua vim.lsp.buf.implementation()<CR>",
+	{ noremap = true, silent = true, desc = "Goto implementation" }
 )
 map(
-    "n",
-    "gT",
-    "<cmd>lua vim.lsp.buf.type_definition()<CR>",
-    { noremap = true, silent = true, desc = "Goto type definition" }
+	"n",
+	"gT",
+	"<cmd>lua vim.lsp.buf.type_definition()<CR>",
+	{ noremap = true, silent = true, desc = "Goto type definition" }
 )
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true, desc = "References" })
 map("n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true, desc = "Float" })
 map(
-    "n",
-    "gj",
-    "<cmd>lua vim.diagnostic.goto_next({ border = 'rounded' })<cr>",
-    { noremap = true, silent = true, desc = "Next (diag)" }
+	"n",
+	"gj",
+	"<cmd>lua vim.diagnostic.goto_next({ border = 'rounded' })<cr>",
+	{ noremap = true, silent = true, desc = "Next (diag)" }
 )
 map(
-    "n",
-    "gk",
-    "<cmd>lua vim.diagnostic.goto_prev({ border = 'rounded' })<cr>",
-    { noremap = true, silent = true, desc = "Previous (diag)" }
+	"n",
+	"gk",
+	"<cmd>lua vim.diagnostic.goto_prev({ border = 'rounded' })<cr>",
+	{ noremap = true, silent = true, desc = "Previous (diag)" }
 )
 map("n", "gK", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true, desc = "Hover" })
 map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true, desc = "Rename" })
@@ -76,99 +76,99 @@ map("n", "<leader>kp", ":GitConflictPrevConflict<CR>", { silent = true })
 
 -- Gitsigns
 map(
-    "n",
-    "<leader>Gj",
-    "<cmd>lua require 'gitsigns'.next_hunk()<cr>",
-    { noremap = true, silent = true, desc = "Next hunk" }
+	"n",
+	"<leader>Gj",
+	"<cmd>lua require 'gitsigns'.next_hunk()<cr>",
+	{ noremap = true, silent = true, desc = "Next hunk" }
 )
 map(
-    "n",
-    "<leader>Gk",
-    "<cmd>lua require 'gitsigns'.prev_hunk()<cr>",
-    { noremap = true, silent = true, desc = "Previous hunk" }
+	"n",
+	"<leader>Gk",
+	"<cmd>lua require 'gitsigns'.prev_hunk()<cr>",
+	{ noremap = true, silent = true, desc = "Previous hunk" }
 )
 map(
-    "n",
-    "<leader>Gl",
-    "<cmd>lua require 'gitsigns'.blame_line()<cr>",
-    { noremap = true, silent = true, desc = "Blame line" }
+	"n",
+	"<leader>Gl",
+	"<cmd>lua require 'gitsigns'.blame_line()<cr>",
+	{ noremap = true, silent = true, desc = "Blame line" }
 )
 map(
-    "n",
-    "<leader>Gp",
-    "<cmd>lua require 'gitsigns'.preview_hunk()<cr>",
-    { noremap = true, silent = true, desc = "Preview hunk" }
+	"n",
+	"<leader>Gp",
+	"<cmd>lua require 'gitsigns'.preview_hunk()<cr>",
+	{ noremap = true, silent = true, desc = "Preview hunk" }
 )
 map(
-    "n",
-    "<leader>Gh",
-    "<cmd>lua require 'gitsigns'.reset_hunk()<cr>",
-    { noremap = true, silent = true, desc = "Reset hunk" }
+	"n",
+	"<leader>Gh",
+	"<cmd>lua require 'gitsigns'.reset_hunk()<cr>",
+	{ noremap = true, silent = true, desc = "Reset hunk" }
 )
 map(
-    "n",
-    "<leader>Gr",
-    "<cmd>lua require 'gitsigns'.reset_buffer()<cr>",
-    { noremap = true, silent = true, desc = "Reset buffer" }
+	"n",
+	"<leader>Gr",
+	"<cmd>lua require 'gitsigns'.reset_buffer()<cr>",
+	{ noremap = true, silent = true, desc = "Reset buffer" }
 )
 map(
-    "n",
-    "<leader>Gs",
-    "<cmd>lua require 'gitsigns'.stage_hunk()<cr>",
-    { noremap = true, silent = true, desc = "Stage hunk" }
+	"n",
+	"<leader>Gs",
+	"<cmd>lua require 'gitsigns'.stage_hunk()<cr>",
+	{ noremap = true, silent = true, desc = "Stage hunk" }
 )
 map(
-    "n",
-    "<leader>Gu",
-    "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-    { noremap = true, silent = true, desc = "Undo stage hunk" }
+	"n",
+	"<leader>Gu",
+	"<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
+	{ noremap = true, silent = true, desc = "Undo stage hunk" }
 )
 map(
-    "n",
-    "<leader>Gd",
-    "<cmd>lua require 'gitsigns'.diffthis()<cr>",
-    { noremap = true, silent = true, desc = "Diff this" }
+	"n",
+	"<leader>Gd",
+	"<cmd>lua require 'gitsigns'.diffthis()<cr>",
+	{ noremap = true, silent = true, desc = "Diff this" }
 )
 
 -- Trouble
 vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", { desc = "Trouble", silent = true, noremap = true })
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>xw",
-    "<cmd>Trouble workspace_diagnostics<cr>",
-    { desc = "Trouble workspace", silent = true, noremap = true }
+	"n",
+	"<leader>xw",
+	"<cmd>Trouble workspace_diagnostics<cr>",
+	{ desc = "Trouble workspace", silent = true, noremap = true }
 )
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>xd",
-    "<cmd>Trouble document_diagnostics<cr>",
-    { desc = "Trouble document", silent = true, noremap = true }
+	"n",
+	"<leader>xd",
+	"<cmd>Trouble document_diagnostics<cr>",
+	{ desc = "Trouble document", silent = true, noremap = true }
 )
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>xl",
-    "<cmd>Trouble loclist<cr>",
-    { desc = "Trouble location list", silent = true, noremap = true }
+	"n",
+	"<leader>xl",
+	"<cmd>Trouble loclist<cr>",
+	{ desc = "Trouble location list", silent = true, noremap = true }
 )
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>xq",
-    "<cmd>Trouble quickfix<cr>",
-    { desc = "Trouble quickfix list", silent = true, noremap = true }
+	"n",
+	"<leader>xq",
+	"<cmd>Trouble quickfix<cr>",
+	{ desc = "Trouble quickfix list", silent = true, noremap = true }
 )
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>xr",
-    "<cmd>Trouble lsp_references<cr>",
-    { desc = "Trouble references", silent = true, noremap = true }
+	"n",
+	"<leader>xr",
+	"<cmd>Trouble lsp_references<cr>",
+	{ desc = "Trouble references", silent = true, noremap = true }
 )
 
 -- Lazygit
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>lg",
-    "<cmd>lua _lazygit_toggle()<CR>",
-    { desc = "lazygit", noremap = true, silent = true }
+	"n",
+	"<leader>lg",
+	"<cmd>lua _lazygit_toggle()<CR>",
+	{ desc = "lazygit", noremap = true, silent = true }
 )
 
 -- Telescope
@@ -176,10 +176,10 @@ map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { noremap = true, silent
 map("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", { noremap = true, silent = true, desc = "Git branches" })
 map("n", "<leader>gC", "<cmd>telescope git_commits<cr>", { noremap = true, silent = true, desc = "Git commits" })
 map(
-    "n",
-    "<leader>gc",
-    "<cmd>telescope git_bcommits<cr>",
-    { noremap = true, silent = true, desc = "Git buffer commits" }
+	"n",
+	"<leader>gc",
+	"<cmd>telescope git_bcommits<cr>",
+	{ noremap = true, silent = true, desc = "Git buffer commits" }
 )
 map("n", "<leader>ta", "<cmd>Telescope help_tags<CR>", { noremap = true, silent = true, desc = "Help" })
 map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { noremap = true, silent = true, desc = "Marks" })
@@ -196,40 +196,41 @@ map("n", "<leader>sh", "<cmd>Telescope search_history<CR>", { noremap = true, si
 map("n", "<leader>C", "<cmd>Telescope colorscheme<CR>", { noremap = true, silent = true, desc = "Colorschemes" })
 
 map("n", "<leader>lD", function()
-    require("telescope.builtin").diagnostics()
+	require("telescope.builtin").diagnostics()
 end, { desc = "Telescope search diagnostics" })
 map(
-    "n",
-    "<Leader>f",
-    '<cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({}))<cr>',
-    { desc = "Fuzzy files" }
+	"n",
+	"<Leader>f",
+	'<cmd>lua require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({}))<cr>',
+	{ desc = "Fuzzy files" }
 )
 map("n", "<leader>r", '<cmd>lua require("telescope.builtin").registers()<cr>', { desc = "Registers" })
 map(
-    "n",
-    "<leader>/",
-    '<cmd>lua require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown({}))<cr>',
-    { desc = "Find/Grep" }
+	"n",
+	"<leader>/",
+	'<cmd>lua require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown({}))<cr>',
+	{ desc = "Find/Grep" }
 )
 map(
-    "n",
-    "<leader>b",
-    '<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({}))<cr>',
-    { desc = "Buffers" }
+	"n",
+	"<leader>b",
+	'<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({}))<cr>',
+	{ desc = "Buffers" }
 )
 map("n", "<leader>h", '<cmd>lua require("telescope.builtin").help_tags()<cr>', { desc = "Help" })
 map(
-    "n",
-    "<leader>th",
-    '<cmd>lua require("telescope.builtin").file_browser(require("telescope.themes").get_dropdown({}))<cr>',
-    { desc = "File browser" }
+	"n",
+	"<leader>th",
+	'<cmd>lua require("telescope.builtin").file_browser(require("telescope.themes").get_dropdown({}))<cr>',
+	{ desc = "File browser" }
 )
 map("n", "<leader>spl", '<cmd>lua require("telescope.builtin").spell_suggest()<cr>')
 map("n", "<leader>gpr", '<cmd>lua require("telescope").extensions.gh.pull_request()<cr>')
 
 map("n", "<Leader>c", ":bdelete!<CR>", { desc = "Close buffer" })
 -- Symbols
-map("n", "<Leader>y", ":SymbolsOutline<CR>", { desc = "Symbols" })
+map("n", "<Leader>Y", ":SymbolsOutline<CR>", { desc = "Symbols" })
+map("n", "<Leader>y", ":AerialToggle<CR>", { desc = "Symbols" })
 
 -- Open nvimrc file
 map("n", "<Leader>v", "<cmd>e $MYVIMRC<CR>")
@@ -302,40 +303,40 @@ vim.api.nvim_set_keymap("n", "<leader>nc", ":lua require('package-info').hide()<
 
 -- Update package on line
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>nu",
-    ":lua require('package-info').update()<CR>",
-    { silent = true, noremap = true }
+	"n",
+	"<leader>nu",
+	":lua require('package-info').update()<CR>",
+	{ silent = true, noremap = true }
 )
 
 -- Delete package on line
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>nd",
-    ":lua require('package-info').delete()<CR>",
-    { silent = true, noremap = true }
+	"n",
+	"<leader>nd",
+	":lua require('package-info').delete()<CR>",
+	{ silent = true, noremap = true }
 )
 
 -- Install a new package
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>ni",
-    ":lua require('package-info').install()<CR>",
-    { silent = true, noremap = true }
+	"n",
+	"<leader>ni",
+	":lua require('package-info').install()<CR>",
+	{ silent = true, noremap = true }
 )
 
 -- Reinstall dependencies
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>nr",
-    ":lua require('package-info').reinstall()<CR>",
-    { silent = true, noremap = true }
+	"n",
+	"<leader>nr",
+	":lua require('package-info').reinstall()<CR>",
+	{ silent = true, noremap = true }
 )
 
 -- Install a different package version
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>np",
-    ":lua require('package-info').change_version()<CR>",
-    { silent = true, noremap = true }
+	"n",
+	"<leader>np",
+	":lua require('package-info').change_version()<CR>",
+	{ silent = true, noremap = true }
 )
