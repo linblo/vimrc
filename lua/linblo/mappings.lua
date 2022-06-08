@@ -48,7 +48,7 @@ map(
 	{ noremap = true, silent = true, desc = "Goto type definition" }
 )
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true, desc = "References" })
-map("n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true, desc = "Float" })
+map("n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true, desc = "Floating diag" })
 map(
 	"n",
 	"gj",
@@ -61,8 +61,8 @@ map(
 	"<cmd>lua vim.diagnostic.goto_prev({ border = 'rounded' })<cr>",
 	{ noremap = true, silent = true, desc = "Previous (diag)" }
 )
-map("n", "gK", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true, desc = "Hover" })
-map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true, desc = "Rename" })
+map("n", "gK", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true, desc = "Hover (LSP)" })
+map("n", "gR", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true, desc = "Rename (LSP)" })
 map("n", "<leader>li", "<cmd>LspInfo<cr>", { noremap = true, silent = true, desc = "LSP info" })
 map("n", "<leader>lI", "<cmd>LspInstallInfo<cr>", { noremap = true, silent = true, desc = "LSP Install info" })
 
@@ -227,7 +227,7 @@ map(
 map("n", "<leader>spl", '<cmd>lua require("telescope.builtin").spell_suggest()<cr>')
 map("n", "<leader>gpr", '<cmd>lua require("telescope").extensions.gh.pull_request()<cr>')
 
-map("n", "<Leader>c", ":bdelete!<CR>", { desc = "Close buffer" })
+-- map("n", "<Leader>c", ":bdelete!<CR>", { desc = "Close buffer" })
 -- Symbols
 map("n", "<Leader>Y", ":SymbolsOutline<CR>", { desc = "Symbols" })
 map("n", "<Leader>y", ":AerialToggle<CR>", { desc = "Symbols" })

@@ -97,7 +97,7 @@ require("null-ls").setup({
 		--   args = { "--indent-width", "2", "--indent-type", "Spaces", "-" },
 		-- }),
 	},
-	on_attach,
+	-- on_attach,
 })
 
 -- the duration in there is to stop timeouts on massive files
