@@ -129,6 +129,12 @@ map(
 	"<cmd>lua require 'gitsigns'.diffthis()<cr>",
 	{ noremap = true, silent = true, desc = "Diff this" }
 )
+map(
+	"n",
+	"<leader>Gq",
+	"<cmd>lua require 'gitsigns'.setqflist()<cr>",
+	{ noremap = true, silent = true, desc = "Hunks to quickfix list" }
+)
 
 -- Trouble
 vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", { desc = "Trouble", silent = true, noremap = true })
