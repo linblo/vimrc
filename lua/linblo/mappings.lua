@@ -11,7 +11,7 @@ local map = vim.keymap.set
 -- map("n", "<c-t>", ":NvimTreeToggle<CR>", { desc = "Tree", silent = true })
 
 --Themes NeoTree
-map("n", "<c-t>", ":NeoTreeFocusToggle<CR>", { desc = "Tree", silent = true })
+map("n", "<c-t>", ":NeoTreeRevealToggle<CR>", { desc = "Tree", silent = true })
 map("n", "<leader>tt", ":NeoTreeFloatToggle<CR>", { desc = "Tree floating", silent = true })
 -- LSP Saga
 map("n", "<Leader>cf", ":Lspsaga lsp_finder<CR>", { desc = "Code finder", silent = true })
@@ -27,7 +27,7 @@ map("n", "<leader>cn", ":Lspsaga diagnostic_jump_next<CR>", { desc = "Next (diag
 map("n", "<leader>cp", ":Lspsaga diagnostic_jump_prev<CR>", { desc = "Previous (diag)", silent = true })
 map("n", "<leader>cr", ":Lspsaga rename<CR>", { desc = "Rename", silent = true })
 map("n", "<leader>cd", ":Lspsaga preview_definition<CR>", { desc = "Definition preview", silent = true })
-map("n", "<leader>=", "<cmd>lua vim.lsp.buf.formatting_seq_sync()<CR>", { desc = "Format", silent = false })
+map("n", "<leader>=", "<cmd>lua vim.lsp.buf.format()<CR>", { desc = "Format", silent = false })
 
 local opts = { noremap = true, silent = true }
 

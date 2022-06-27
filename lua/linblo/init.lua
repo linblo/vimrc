@@ -4,6 +4,8 @@ local cmd = vim.cmd -- to execute Vim commands e.g. cmd('pwd')
 local fn = vim.fn -- to call Vim functions e.g. fn.bufnr()
 local g = vim.g -- a table to access global variables
 
+g.do_filetype_lua = 1
+g.did_load_filetypes = 0
 -- Map leader to space
 g.mapleader = " "
 
@@ -81,7 +83,7 @@ require("paq")({
 	"folke/trouble.nvim",
 	"akinsho/toggleterm.nvim",
 	"sindrets/diffview.nvim",
-	"Mofiqul/dracula.nvim",
+	"TimUntersberger/neogit",
 	"folke/tokyonight.nvim",
 	"marko-cerovac/material.nvim",
 	"navarasu/onedark.nvim",
@@ -101,10 +103,17 @@ require("neo-tree").setup()
 require("git-conflict").setup({
 	default_mappings = false,
 })
-
+require("neogit").setup({
+	integrations = {
+		diffview = true,
+	},
+})
 require("trouble").setup()
 require("toggleterm").setup()
-require("aerial").setup({})
+require("aerial").setup({
+	backends = { "lsp", "treesitter", "markdown" },
+	filter_kind = false,
+})
 
 -- lazygit
 local Terminal = require("toggleterm.terminal").Terminal
@@ -260,12 +269,12 @@ require("octo").setup()
 -- require('neoscroll').setup()
 require("cinnamon").setup({
 	default_keymaps = true, -- Create default keymaps.
-	extra_keymaps = true, -- Create extra keymaps.
+	extra_keymaps = false, -- Create extra keymaps.
 	extended_keymaps = true, -- Create extended keymaps.
 	centered = true, -- Keep cursor centered in window when using window scrolling.
-	default_delay = 0.2, -- The default delay (in ms) between each line when scrolling.
-	horizontal_scroll = true, -- Enable smooth horizontal scrolling when view shifts left or right.
-	scroll_limit = 150, -- Max number of lines moved before scrolling is skipped.
+	default_delay = 1, -- The default delay (in ms) between each line when scrolling.
+	horizontal_scroll = false, -- Enable smooth horizontal scrolling when view shifts left or right.
+	scroll_limit = 100, -- Max number of lines moved before scrolling is skipped.
 })
 
 require("surround").setup({ mappings_style = "sandwich" })
